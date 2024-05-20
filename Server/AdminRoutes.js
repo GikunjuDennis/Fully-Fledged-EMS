@@ -1,6 +1,6 @@
 //Indicate all routes related to the Admin
 import express from 'express';
-import con from '../utils/db.js';
+import con from './utils/db.js';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
