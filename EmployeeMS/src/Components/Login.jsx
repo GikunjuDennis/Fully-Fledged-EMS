@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import './style.css'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import './style.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Login = () => {
@@ -12,12 +12,12 @@ export const Login = () => {
         password: ''
     })
     const [error, setError] = useState(null); //State variable to store error messages
-    const navigate = useNavigate();  //hook for programmatic navigation
+    const navigate = useNavigate();  //Hook for programmatic navigation
 
     //to store cookies
     axios.defaults.withCredentials = true;
 
-    //Function to habdle form submission
+    //Function to handle form submission
     const handleSubmit = (event) => {
         event.preventDefault()
 
@@ -49,21 +49,33 @@ export const Login = () => {
             <form onSubmit={handleSubmit}>
                 <div className='mb-3'>
                     <label htmlFor="email"><strong>Email:</strong></label>
-                    <input type="email" name='email' autoComplete= 'off' placeholder='Enter Email'
-                    onChange={(e) => setValues({...values, email : e.target.value})}className='form-control rounded-0'/> 
+                    <input 
+                    type="email" 
+                    name='email' 
+                    autoComplete= 'off' 
+                    placeholder='Enter Email'
+                    onChange={(e) => setValues({...values, email : e.target.value})}className='form-control rounded-0'
+                    /> 
                 </div>
                 <div className='mb-3'>
                     <label htmlFor="password"><strong>Password:</strong></label>
-                    <input type="password" name='password' placeholder='Enter Password'
-                    onChange={(e) => setValues({...values, password : e.target.value})}className='form-control rounded-0'/> 
+                    <input 
+                    type="password" 
+                    name='password' 
+                    placeholder='Enter Password'
+                    onChange={(e) => setValues({...values, password : e.target.value})}className='form-control rounded-0'
+                    /> 
                 </div>
                 <button className='btn btn-success w-100 rounded-0 mb-2'>Log In</button>
                 <div className='mb-1'>
-                    <input type="checkbox" name="tick" id="tick" className='me-2' />
+                    <input type="checkbox" 
+                    name="tick" id="tick" 
+                    className='me-2' 
+                    />
                     <label htmlFor="password">You Agree with the terms & conditions</label>         
                 </div>
             </form>
         </div>
     </div>
-  )
-}
+  );
+};
