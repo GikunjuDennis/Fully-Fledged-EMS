@@ -1,6 +1,20 @@
 import React from 'react'
 
 const AddEmployee = () => {
+   const[category, setCategory] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/auth/category')
+        .then(result => {
+            if(result.data.Status){
+                setCategory(result.data.Result);
+            } else {
+                alert(result.data.Error)
+            }
+           
+        })
+        .catch(err => console.log(err))
+    }, [])
   return (
     <div className='d-flex justify-content-center align-items-center mt-3'>
         <div className='p-3 rounded w-50 border'>           
@@ -29,13 +43,18 @@ const AddEmployee = () => {
                 /> 
                 </div>
                 <div className='col-12'>
-                 <label for="inputDepartment"className="form-label">
-                    Department
+                 <label for="inputCategory"className="form-label">
+                    Category
                  </label>
+                 <select name="category" id="category" className="form-select">
+                     {category.map(c =>{
+                        return <option value={c.name}>{c.name}</option>
+                     })}
+                 </select>
                 <input 
-                type="department" 
+                type="category" 
                 className='form-control rounded-0'
-                id="inputDepartment"
+                id="category"
                 placeholder="Enter Department"              
                 /> 
                 </div>
