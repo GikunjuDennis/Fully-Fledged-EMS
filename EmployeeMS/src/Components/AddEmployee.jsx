@@ -10,8 +10,7 @@ const AddEmployee = () => {
                 setCategory(result.data.Result);
             } else {
                 alert(result.data.Error)
-            }
-           
+            }  
         })
         .catch(err => console.log(err))
     }, [])

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from 'cors'
-import { adminRouter } from "./Sever/Routes/adminRoute.js";
+import { adminRouter } from "./AdminRoutes.js";
 
 //create instance 
 const app = express()
