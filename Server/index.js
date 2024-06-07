@@ -13,6 +13,7 @@ app.use(cors({
 }))
 app.use(express.json()) // transfer data to the json format when parsing from frontend
 app.use('/auth', adminRouter)
+app.use(express.static('Public'))
 
 
 //Assign a port number

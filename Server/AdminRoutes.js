@@ -87,5 +87,14 @@ router.post('/add_employee', upload.single('image'), (req, res) => {
 
 });
 
+//Route to get the employees
+router.get('/employee', (req, res)=> {
+    const sql = "SELECT * FROM employee";
+    con.query(sql, (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"})
+        return res.json({Status: true, Result : result}) 
+    })
+})
+
 
 export {router as adminRouter}
