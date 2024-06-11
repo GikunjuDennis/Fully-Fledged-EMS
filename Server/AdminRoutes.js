@@ -81,7 +81,7 @@ router.post('/add_employee', upload.single('image'), (req, res) => {
     const sql = 'INSERT INTO employee (name, email, category, role, salary, image, address) VALUES (?)';
     //Execute the query
     con.query(sql, [values], (err, result) => {
-        if (err) return res.json({status: false, Error: err});
+        if (err) return res.json({status: false, Error: "Database query error"});
         return res.json({Status: true, Result: result});
     });
 
