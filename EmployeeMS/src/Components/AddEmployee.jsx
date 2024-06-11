@@ -24,6 +24,7 @@ const AddEmployee = () => {
         if (result.data.Status) {
           setCategory(result.data.Result);
         } else {
+          console.log(result.data.Error)
           alert(result.data.Error);
         }
       })
@@ -40,13 +41,14 @@ const handleSubmit = (e) => {
     formData.append('salary', employee.salary);
     formData.append('image', employee.image);
     formData.append('address', employee.address);
-
+    console.log("email: " + employee.email+ " name: "+ employee.name + " category: " + employee.category + " image: " + employee.image)
 
     axios.post('http://localhost:3000/auth/add_employee', formData)
     .then(result => {
         if(result.data.Status) {
             navigate('/dashboard/employee')
         } else{
+          console.log(JSON.stringify(result.data))
             alert(result.data.Error);
         }
     })
@@ -80,14 +82,17 @@ const handleSubmit = (e) => {
               id="inputEmail"
               placeholder="Enter Email"
               autoComplete="off"
-              onChange={(e) => setEmployee({ ...employee, eamil: e.target.value })}
+              onChange={(e) => setEmployee({ ...employee, email: e.target.value })}
             />
           </div>
           <div className="col-12">
             <label htmlFor="inputCategory" className="form-label">
               Category
             </label>
-            <select name="category" id="category" className="form-select" onChange={(e) => setEmployee({...employee, category: e.target.value})}>
+            <select name="category" id="category" className="form-select" value={employee.category} onChange={(e) => {
+        {/*console.log(e.target.value);*/} // Log the selected value
+        setEmployee({...employee, category: e.target.value});
+      }}>
               {category.map((c) => {
                 return (
                   <option key={c.id} value={c.name}>

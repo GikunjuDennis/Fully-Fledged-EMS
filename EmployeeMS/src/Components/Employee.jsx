@@ -40,8 +40,11 @@ const Employee = () => {
             </tr>
           </thead>
           <tbody>
-            {employee.map((c) => (
-              <tr>
+            {employee.map((c,index) => 
+              (
+              
+              <tr key={index}>
+                
                 <td>{c.name}</td>
                 <td>{c.email}</td>
                 <td>{c.category}</td>
@@ -49,14 +52,14 @@ const Employee = () => {
                 <td>{c.salary}</td>
                 <td>
                   <img
-                    src={`http://localhost:3000/Images/` + employee.image}
+                    src={`http://localhost:3000/Public/Images/${c.image}`}
                     className="employee_image"
                     alt=""
                   />
                 </td>
                 <td>{c.address}</td>
                 <td>
-                  <link to={`/dashboard/edit_employee/` + e.id} className="btn btn-info btn-sm me-2">Edit</link>
+                  <Link to={`/dashboard/edit_employee/` + c.id} className="btn btn-info btn-sm me-2">Edit</Link>
                   <button className="btn btn-warning btn-sm">Delete</button>
                 </td>
               </tr>
@@ -66,6 +69,7 @@ const Employee = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Employee;
