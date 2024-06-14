@@ -8,7 +8,7 @@ const AddEmployee = () => {
   const [employee, setEmployee] = useState({
     name: "",
     email: "",
-    category: "",
+    category_id: "",
     role: "",
     salary: "",
     image: "",
@@ -36,7 +36,7 @@ const handleSubmit = (e) => {
     const formData = new FormData();
     formData.append('name', employee.name);
     formData.append('email', employee.email);
-    formData.append('category', employee.category);
+    formData.append('category_id', employee.category_id);
     formData.append('role', employee.role);
     formData.append('salary', employee.salary);
     formData.append('image', employee.image);
@@ -91,7 +91,7 @@ const handleSubmit = (e) => {
             </label>
             <select name="category" id="category" className="form-select" value={employee.category} onChange={(e) => {
         {/*console.log(e.target.value);*/} // Log the selected value
-        setEmployee({...employee, category: e.target.value});
+        setEmployee({...employee, category_id: e.target.value});
       }}>
               {category.map((c) => {
                 return (

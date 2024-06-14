@@ -10,7 +10,7 @@ const app = express()
 //Middlware
 app.use(cors({
     origin: ["http://localhost:5173"],
-    methods: ['GET', 'POST', 'PUT'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }))
 app.use(express.json()) // transfer data to the json format when parsing from frontend

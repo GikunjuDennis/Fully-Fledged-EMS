@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Employee = () => {
   const [employee, setEmployee] = useState([]);
+  const navigate = useNavigate()
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/employee")
@@ -16,6 +17,19 @@ const Employee = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleDelete = (id) => {
+    console.log("Deleting ID:", id);
+    axios.delete('http://localhost:3000/auth/delete_employee/' +id)
+    .then(result => {
+      if (result.data.Status) {
+          console.log("Delete successful");
+          window.location.reload() //will reload the page after the delete
+      }else {
+        alert(result.data.Error)
+      }
+    })
+  }
 
   return (
     <div className="px-5 mt-3">
@@ -47,7 +61,7 @@ const Employee = () => {
                 
                 <td>{c.name}</td>
                 <td>{c.email}</td>
-                <td>{c.category}</td>
+                <td>{c.category_id}</td>
                 <td>{c.role}</td>
                 <td>{c.salary}</td>
                 <td>
@@ -60,7 +74,7 @@ const Employee = () => {
                 <td>{c.address}</td>
                 <td>
                   <Link to={`/dashboard/edit_employee/` + c.id} className="btn btn-info btn-sm me-2">Edit</Link>
-                  <button className="btn btn-warning btn-sm">Delete</button>
+                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(c.id)}>Delete</button>
                 </td>
               </tr>
             ))}

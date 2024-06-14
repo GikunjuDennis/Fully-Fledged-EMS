@@ -46,7 +46,7 @@ router.get('/category', (req, res)=> {
 
 //Route to add a new category
 router.post('/add_category', (req, res) => {
-    const sql = "INSERT INTO category ('name') VALUES (?)";
+    const sql = "INSERT INTO category (`name`) VALUES (?)";
     con.query(sql, [req.body.category], (err, result) => {
         if (err) return res.json({status: false, Error: "Database query error"});
         return res.json({Status: true, Result: result});
@@ -81,7 +81,7 @@ router.post('/add_employee', upload.single('image'), (req, res) => {
     const sql = 'INSERT INTO employee (name, email, category, role, salary, image, address) VALUES (?)';
     //Execute the query
     con.query(sql, [values], (err, result) => {
-        if (err) return res.json({status: false, Error: "Database query error"});
+        if (err) return res.json({status: false, Error: err});
         return res.json({Status: true, Result: result});
     });
 
@@ -95,6 +95,81 @@ router.get('/employee', (req, res)=> {
         return res.json({Status: true, Result : result}) 
     })
 })
+
+router.get('/employee/:id', (req, res) => {
+    const id = req.params.id; 
+    const sql = "SELECT * FROM employee WHERE id = ?";
+    con.query(sql,[id] ,(err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"})
+        return res.json({Status: true, Result : result}) 
+    }) 
+})
+
+//Route to edit/update employee
+router.put('/edit_employee/:id', (req,res) => {
+    const id = req.params.id;
+    const sql = 'UPDATE employee set name= ?, email= ?, category_id= ?, role= ?, salary= ?, address= ? where id = ?'
+        const values = [
+            req.body.name,
+            req.body.email,
+            req.body.address,
+            req.body.category_id,
+            req.body.role,
+            req.body.salary,
+        ]
+
+    con.query(sql,[...values, id], (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+        return res.json({Status: true, Result : result});
+    });
+});
+
+//Route to delete an Employee record
+router.delete('/delete_employee/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "DELETE from employee where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+        return res.json({Status: true, Result : result});
+    });
+});
+
+//Admin Counter
+router.get('/admin_count', (req, res) => {
+    const sql = "select count(id) as admin from admin";
+    con.query(sql, (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+        return res.json({Status: true, Result : result});
+    });
+});
+
+//Employee Counter
+router.get('/employee_count', (req, res) => {
+    const sql = "select count(id) as employee from employee";
+    con.query(sql, (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+            console.log(result);
+        return res.json({Status: true, Result : result});
+    });
+});
+
+//Salary Counter
+router.get('/salary_count', (req, res) => {
+    const sql = "SELECT SUM (salary) as salary from employee";
+    con.query(sql, (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+        return res.json({Status: true, Result : result});
+    });
+});
+
+//Route to get Admin Records
+router.get('/admin_records', (req, res) => {
+    const sql = "SELECT * from admin"
+    con.query(sql, (err, result) => {
+        if (err) return res.json({status: false, Error: "Database query error"+ err})
+        return res.json({Status: true, Result : result});
+    });
+});
 
 
 export {router as adminRouter}
