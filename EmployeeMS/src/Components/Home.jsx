@@ -48,6 +48,19 @@ const Home = () => {
     })
   }
 
+  const handleDelete = (id) => {
+    console.log("Deleting ID:", id);
+    axios.delete('http://localhost:3000/auth/delete_admin/' +id)
+    .then(result => {
+      if (result.data.Status) {
+          console.log("Delete successful");
+          window.location.reload() //will reload the page after the delete
+      }else {
+        alert(result.data.Error)
+      }
+    })
+  }
+
   return (
     <div>
       <div className='p-3 d-flex justify-content-around mt-3'>
@@ -94,11 +107,11 @@ const Home = () => {
           <tbody>
             {
               admins.map(a => (
-                <tr>
+                <tr key={a.id}>
                   <td>a.email</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
-                  <button className="btn btn-warning btn-sm">Delete</button>
+                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.Id)}>Delete</button>
                 </td>
                 </tr>
               ))
