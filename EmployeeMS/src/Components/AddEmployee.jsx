@@ -8,6 +8,7 @@ const AddEmployee = () => {
   const [employee, setEmployee] = useState({
     name: "",
     email: "",
+    password: "",
     category_id: "",
     role: "",
     salary: "",
@@ -36,6 +37,7 @@ const handleSubmit = (e) => {
     const formData = new FormData();
     formData.append('name', employee.name);
     formData.append('email', employee.email);
+    formData.append('password', employee.password);
     formData.append('category_id', employee.category_id);
     formData.append('role', employee.role);
     formData.append('salary', employee.salary);
@@ -73,6 +75,18 @@ const handleSubmit = (e) => {
             />
           </div>
           <div className="col-12">
+            <label htmlFor="inputPassword4" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control rounded-0"
+              id="inputPassword4"
+              placeholder="Enter Password"
+              onChange={(e) => setEmployee({ ...employee, password: e.target.value })}
+            />
+          </div>
+          <div className="col-12">
             <label htmlFor="inputEmail" className="form-label">
               Email
             </label>
@@ -89,7 +103,7 @@ const handleSubmit = (e) => {
             <label htmlFor="inputCategory" className="form-label">
               Category
             </label>
-            <select name="category" id="category" className="form-select" value={employee.category} onChange={(e) => {
+            <select name="category" id="category" className="form-select" value={employee.category_id} onChange={(e) => {
         {/*console.log(e.target.value);*/} // Log the selected value
         setEmployee({...employee, category_id: e.target.value});
       }}>
@@ -123,7 +137,7 @@ const handleSubmit = (e) => {
               type="text"
               className="form-control rounded-0"
               id="inputSalary"
-              placehiolder="Enter Salary"
+              placeholder="Enter Salary"
               autoComplete="off"
               onChange={(e) => setEmployee({ ...employee, salary: e.target.value })}
             />

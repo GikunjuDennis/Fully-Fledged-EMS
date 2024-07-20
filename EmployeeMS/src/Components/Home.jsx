@@ -14,7 +14,8 @@ const Home = () => {
     employeeCount();
     salaryCount();
     adminRecords();
-  }, [])
+  }, []);
+
   const adminRecords = () => {
     axios.get('http://localhost:3000/auth/admin_records')
     .then(result => {
@@ -91,7 +92,7 @@ const Home = () => {
           <hr />
           <div className='d-flex justify-content-between'>
             <h5>Total:</h5>
-            <h5>{salaryTotal}</h5>
+            <h5>KES {salaryTotal}</h5>
           </div>
         </div>
       </div>
@@ -107,7 +108,7 @@ const Home = () => {
           <tbody>
             {
               admins.map(a => (
-                <tr key={a.id}>
+                <tr key={a.Id}>
                   <td>a.email</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
