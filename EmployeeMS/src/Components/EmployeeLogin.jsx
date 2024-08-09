@@ -24,7 +24,8 @@ const handleSubmit = (event) => {
     .then(result => {
         //If login is successful, navigate to the dashboard
         if (result.data.loginStatus) {
-             navigate('/employee_detail'+result.data.id);
+            localStorage.setItem("valid", true)
+            navigate('/employee_detail'+result.data.id);
         } else {
             //If login fails, set error message
             setError(result.data.Error);

@@ -26,6 +26,7 @@ export const Login = () => {
         .then(result => {
             //If login is successful, navigate to the dashboard
             if (result.data.loginStatus) {
+                localStorage.setItem("valid", true)
                  navigate('/dashboard');
             } else {
                 //If login fails, set error message

@@ -108,11 +108,11 @@ const Home = () => {
           <tbody>
             {
               admins.map(a => (
-                <tr key={a.Id}>
+                <tr key={a.id}>
                   <td>a.email</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
-                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.Id)}>Delete</button>
+                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.id)}>Delete</button>
                 </td>
                 </tr>
               ))

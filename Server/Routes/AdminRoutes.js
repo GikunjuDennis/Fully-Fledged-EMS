@@ -91,17 +91,17 @@ router.post('/add_employee', upload.single('image'), (req, res) => {
     console.log("Received Data:", { name, email, category, role, salary, image, address });
     // Prepare the values for the SQL query
     const sql = 'INSERT INTO employee (name, email, password, category, role, salary, image, address) VALUES (?)';
-    bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
+    bcrypt.hash(password.toString(), 10, (err, hash) => {
         if (err) return res.json({ Status: false, Error: "Query error" });
         const values = [
             name,
             email,
             hash,
+            category,
             role,
             salary,
-            address,
             image,
-            category
+            address     
         ];
         // Execute the query
         con.query(sql, [values], (err, result) => {
