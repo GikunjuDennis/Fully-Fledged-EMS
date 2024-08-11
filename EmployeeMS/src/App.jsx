@@ -13,6 +13,7 @@ import AddEmployee from './Components/AddEmployee';
 import EditEmployee from './Components/EditEmployee';
 import EmployeeDetail from './Components/EmployeeDetail';
 import EmployeeLogin from './Components/EmployeeLogin';
+import AdminEditEmployee from "./Components/AdminEditEmployee";
 import { useEffect } from 'react';
 import axios from 'axios';
 import PrivateRoute from './Components/PrivateRoute';
@@ -39,6 +40,7 @@ function App() {
         <Route path='/dashboard/add_category' element={<AddCategory/>}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee/>}></Route>
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee/>}></Route>
+        <Route path='/dashboard/edit_admin_employee/:id' element={<AdminEditEmployee/>}></Route>
       </Route>
     </Routes>
     </BrowserRouter>

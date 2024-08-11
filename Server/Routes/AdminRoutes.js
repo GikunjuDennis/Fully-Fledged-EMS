@@ -5,13 +5,13 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import multer from 'multer';
 import path from 'path';
-import { hash } from 'crypto';
+//import { hash } from 'crypto';
 
 const router = express.Router();
 
 router.post("/adminlogin", (req, res) => {
     // Check credentials with the db
-    const sql = "SELECT * from admin Where email = ?";
+    const sql = "SELECT * from employee Where email = ?";
 
     // Use imported db con to run query
     con.query(sql, [req.body.email], (err, result) => {
@@ -83,12 +83,12 @@ const upload = multer({ storage: storage });
 // Route to add a new employee
 router.post('/add_employee', upload.single('image'), (req, res) => {
     // Extract employee data from the request body
-    const { name, email, category, role, salary, address } = req.body;
+    const { name, email, password, category, role, salary, address } = req.body;
     // Get the filename of the uploaded image
     const image = req.file ? req.file.filename : null;
 
     // Log the received data for debugging
-    console.log("Received Data:", { name, email, category, role, salary, image, address });
+    console.log("Received Data:", { name, email, password, category, role, salary, image, address });
     // Prepare the values for the SQL query
     const sql = 'INSERT INTO employee (name, email, password, category, role, salary, image, address) VALUES (?)';
     bcrypt.hash(password.toString(), 10, (err, hash) => {
@@ -129,6 +129,15 @@ router.get('/employee/:id', (req, res) => {
     });
 });
 
+router.get('/employee_admin/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM admin WHERE id = ?";
+    con.query(sql, [id], (err, result) => {
+        if (err) return res.json({ status: false, Error: "Database query error" });
+        return res.json({ Status: true, Result: result });
+    });
+});
+
 // Route to edit/update employee
 router.put('/edit_employee/:id', (req, res) => {
     const id = req.params.id;
@@ -144,6 +153,27 @@ router.put('/edit_employee/:id', (req, res) => {
 
     con.query(sql, [...values, id], (err, result) => {
         if (err) return res.json({ status: false, Error: "Database query error" + err });
+        return res.json({ Status: true, Result: result });
+    });
+});
+
+// Route to edit/update employee
+router.put('/edit_admin_employee/:id', (req, res) => {
+    const id = req.params.id;
+    
+    const sql = 'UPDATE admin SET Email= ?, WHERE Id = ?';
+   
+
+    const values = [
+      
+        req.body.Email,
+       
+    ];
+    console.log(values)
+
+    con.query(sql, [...values, id], (err, result) => {
+        if (err) return res.json({ status: false, Error: "Database query error" + err });
+        console.log(err)
         return res.json({ Status: true, Result: result });
     });
 });

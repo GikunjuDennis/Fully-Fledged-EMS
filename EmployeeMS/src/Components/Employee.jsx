@@ -57,11 +57,11 @@ const Employee = () => {
             {employee.map((c,index) => 
               (
               
-              <tr key={index}>
+              <tr key={c.id}>
                 
                 <td>{c.name}</td>
                 <td>{c.email}</td>
-                <td>{c.category_id}</td>
+                <td>{c.category}</td>
                 <td>{c.role}</td>
                 <td>{c.salary}</td>
                 <td>

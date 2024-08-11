@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -108,11 +109,12 @@ const Home = () => {
           <tbody>
             {
               admins.map(a => (
-                <tr key={a.id}>
-                  <td>a.email</td>
+                <tr key={a.Id}>
+                  <td>{a.Email}</td>
                   <td>
-                    <button className="btn btn-info btn-sm me-2">Edit</button>
-                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.id)}>Delete</button>
+                    {/*<button className="btn btn-info btn-sm me-2">Edit</button>*/}
+                    <Link to={`/dashboard/edit_admin_employee/` + a.Id} className="btn btn-info btn-sm me-2">Edit</Link>
+                  <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.Id)}>Delete</button>
                 </td>
                 </tr>
               ))
