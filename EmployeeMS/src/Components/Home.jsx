@@ -35,6 +35,7 @@ const Home = () => {
   const employeeCount = () => {
     axios.get('http://localhost:3000/auth/employee_count')
     .then(result => {
+      console.log(result)
       if(result.data.Status) {
         setEmployeeTotal(result.data.Result[0].employee)
       }
@@ -108,8 +109,8 @@ const Home = () => {
           <tbody>
             {
               admins.map(a => (
-                <tr key={a.id}>
-                  <td>a.email</td>
+                <tr key={a.Id}>
+                  <td>{a.Email}</td>
                   <td>
                     <button className="btn btn-info btn-sm me-2">Edit</button>
                   <button className="btn btn-warning btn-sm"onClick={() => handleDelete(a.id)}>Delete</button>

@@ -61,7 +61,7 @@ const Employee = () => {
                 
                 <td>{c.name}</td>
                 <td>{c.email}</td>
-                <td>{c.category_id}</td>
+                <td>{c.category}</td>
                 <td>{c.role}</td>
                 <td>{c.salary}</td>
                 <td>

@@ -20,7 +20,7 @@ app.use(express.json()) // transfer data to the json format when parsing from fr
 app.use(cookieParser());
 app.use('/auth', adminRouter);
 app.use('/employee', EmployeeRouter);
-app.use(express.static('Public'));
+//app.use(express.static('Public'));
 
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
@@ -42,6 +42,8 @@ app.get('/verify', verifyUser, (req, res) =>{
 // Resolve __dirname and __filename for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use('/Public', express.static(path.join(__dirname, 'Public')));
 //app.use(express.static('Public'))
 
 

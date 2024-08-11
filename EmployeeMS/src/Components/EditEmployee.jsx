@@ -34,7 +34,7 @@ const EditEmployee = () => {
             ...employee,
             name: result.data.Result[0].name,
             email: result.data.Result[0].email,
-            category_id: result.data.Result[0].category_id,
+            category: result.data.Result[0].category,
             role: result.data.Result[0].role,
             salary: result.data.Result[0].salary,
             address: result.data.Result[0].address,

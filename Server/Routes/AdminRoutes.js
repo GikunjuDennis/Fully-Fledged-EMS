@@ -5,13 +5,12 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import multer from 'multer';
 import path from 'path';
-import { hash } from 'crypto';
 
 const router = express.Router();
 
 router.post("/adminlogin", (req, res) => {
     // Check credentials with the db
-    const sql = "SELECT * from admin Where email = ?";
+    const sql = "SELECT * from employee Where email = ?" ;
 
     // Use imported db con to run query
     con.query(sql, [req.body.email], (err, result) => {
@@ -83,12 +82,12 @@ const upload = multer({ storage: storage });
 // Route to add a new employee
 router.post('/add_employee', upload.single('image'), (req, res) => {
     // Extract employee data from the request body
-    const { name, email, category, role, salary, address } = req.body;
+    const { name, email, password, category, role, salary, address } = req.body;
     // Get the filename of the uploaded image
     const image = req.file ? req.file.filename : null;
 
     // Log the received data for debugging
-    console.log("Received Data:", { name, email, category, role, salary, image, address });
+    console.log("Received Data:", { name, email, password, category, role, salary, image, address });
     // Prepare the values for the SQL query
     const sql = 'INSERT INTO employee (name, email, password, category, role, salary, image, address) VALUES (?)';
     bcrypt.hash(password.toString(), 10, (err, hash) => {
@@ -132,11 +131,11 @@ router.get('/employee/:id', (req, res) => {
 // Route to edit/update employee
 router.put('/edit_employee/:id', (req, res) => {
     const id = req.params.id;
-    const sql = 'UPDATE employee SET name= ?, email= ?, category_id= ?, role= ?, salary= ?, address= ? WHERE id = ?';
+    const sql = 'UPDATE employee SET name= ?, email= ?, category= ?, role= ?, salary= ?, address= ? WHERE id = ?';
     const values = [
         req.body.name,
         req.body.email,
-        req.body.category_id,
+        req.body.category,
         req.body.role,
         req.body.salary,
         req.body.address
@@ -169,7 +168,7 @@ router.get('/admin_count', (req, res) => {
 
 // Employee Counter
 router.get('/employee_count', (req, res) => {
-    const sql = "SELECT COUNT(id) AS employee FROM employee";
+    const sql = "SELECT COUNT(email) AS employee FROM employee";
     con.query(sql, (err, result) => {
         if (err) return res.json({ status: false, Error: "Database query error" + err });
         console.log(result);
