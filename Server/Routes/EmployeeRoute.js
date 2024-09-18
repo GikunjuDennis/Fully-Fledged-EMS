@@ -60,4 +60,15 @@ Router.get('/logout', (req, res) => {
     return res.json({ Status: true });
 })
 
+// Route to get leave requests for an employee
+Router.get('/my_leaves', verifyUser, (req, res) => {
+    const employee_id = req.id; // Get the employee ID from token
+
+    const sql = "SELECT * FROM leave_requests WHERE employee_id = ?";
+    con.query(sql, [employee_id], (err, result) => {
+        if (err) return res.json({ Status: false, Error: "Database query error" });
+        return res.json({ Status: true, Result: result });
+    });
+});
+
 export { Router as EmployeeRouter };

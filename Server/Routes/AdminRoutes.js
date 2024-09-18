@@ -211,4 +211,67 @@ router.get('/logout', (req, res) => {
     return res.json({ Status: true });
 });
 
+// Route to apply for leave
+router.post('/apply_leave', verifyUser, (req, res) => {
+    const { leave_type, start_date, end_date, reason } = req.body;
+    const employee_id = req.id; // Get the employee ID from token
+
+    const leaveDays = calculateLeaveDays(start_date, end_date);
+
+    // Check if the employee has enough leave balance
+    const checkBalanceSql = 'SELECT leave_balance FROM employee WHERE id = ?';
+    con.query(checkBalanceSql, [employee_id], (err, result) => {
+        if (err) return res.json({ status: false, Error: "Database query error" });
+        
+        const currentBalance = result[0].leave_balance;
+
+        if (currentBalance < leaveDays) {
+            return res.json({ Status: false, Error: "Insufficient leave balance" });
+        }
+
+        // Deduct leave days from balance
+        const updateBalanceSql = 'UPDATE employee SET leave_balance = leave_balance - ? WHERE id = ?';
+        con.query(updateBalanceSql, [leaveDays, employee_id], (err) => {
+            if (err) return res.json({ status: false, Error: "Database update error" });
+
+            // Insert leave request
+            const insertLeaveSql = 'INSERT INTO leave_requests (employee_id, leave_type, start_date, end_date, reason) VALUES (?)';
+            const values = [employee_id, leave_type, start_date, end_date, reason];
+
+            con.query(insertLeaveSql, [values], (err, result) => {
+                if (err) return res.json({ status: false, Error: "Database query error" });
+                return res.json({ Status: true, Result: result });
+            });
+        });
+    });
+});
+
+
+// Route to get all leave requests (for admin/HR)
+router.get('/leave_requests', (req, res) => {
+    const sql = "SELECT * FROM leave_requests";
+    con.query(sql, (err, result) => {
+        if (err) return res.json({ status: false, Error: "Database query error" });
+        return res.json({ Status: true, Result: result });
+    });
+});
+
+// Route to approve or reject leave requests
+router.put('/approve_leave/:id', verifyUser, (req, res) => {
+    const id = req.params.id;
+    const { status } = req.body; // 'Approved' or 'Rejected'
+    const approver_id = req.id; // Get the approver ID from token
+
+    if (status !== 'Approved' && status !== 'Rejected') {
+        return res.json({ Status: false, Error: "Invalid status" });
+    }
+
+    const sql = 'UPDATE leave_requests SET status = ?, approved_by = ? WHERE id = ?';
+    con.query(sql, [status, approver_id, id], (err, result) => {
+        if (err) return res.json({ status: false, Error: "Database query error" });
+        return res.json({ Status: true, Result: result });
+    });
+});
+
+
 export { router as adminRouter };

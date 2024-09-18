@@ -1,13 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Leave Management System</h1>
+        <nav>
+            <button id="logout">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Apply for Leave Section -->
+        <section id="apply-leave">
+            <h2>Apply for Leave</h2>
+            <form id="leave-form">
+                <label for="leave-type">Leave Type:</label>
+                <input type="text" id="leave-type" name="leave_type" required>
+
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date" name="start_date" required>
+
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date" name="end_date" required>
+
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason" rows="4" required></textarea>
+
+                <button type="submit">Submit Leave Request</button>
+            </form>
+        </section>
+
+        <!-- Leave Status Section -->
+        <section id="leave-status">
+            <h2>My Leave Status</h2>
+            <button id="fetch-leave-status">Fetch Leave Status</button>
+            <div id="status-output"></div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin-section">
+            <h2>Admin Section</h2>
+            <button id="fetch-pending-leaves">Fetch Pending Leaves</button>
+            <div id="pending-leaves-output"></div>
+        </section>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
 </html>
