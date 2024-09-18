@@ -13,6 +13,7 @@ import AddEmployee from './Components/AddEmployee';
 import EditEmployee from './Components/EditEmployee';
 import EmployeeDetail from './Components/EmployeeDetail';
 import EmployeeLogin from './Components/EmployeeLogin';
+import AdminEditEmployee from "./Components/AdminEditEmployee";
 import { useEffect } from 'react';
 import axios from 'axios';
 import PrivateRoute from './Components/PrivateRoute';
@@ -39,19 +40,14 @@ function App() {
         </PrivateRoute>
       }>
         <Route path='' element={<Home/>}></Route>
-        <Route path='employee' element={<Employee/>}></Route>
-        <Route path='category' element={<Category/>}></Route>
-        <Route path='profile' element={<Profile/>}></Route>
-        <Route path='add_category' element={<AddCategory/>}></Route>
-        <Route path='add_employee' element={<AddEmployee/>}></Route>
-        <Route path='edit_employee/:id' element={<EditEmployee/>}></Route>
-        </Route>
-
-        {/* Leave Management Routes */}
-        <Route path="/apply_leave" component={<LeavePage/>}/>
-        <Route path="/leave_requests" component={<LeavePage/>} />
-        <Route path="/leave_request/:id" component={<LeavePage/>} />
-        </Routes>
+        <Route path='/dashboard/employee' element={<Employee/>}></Route>
+        <Route path='/dashboard/category' element={<Category/>}></Route>
+        <Route path='/dashboard/profile' element={<Profile/>}></Route>
+        <Route path='/dashboard/add_category' element={<AddCategory/>}></Route>
+        <Route path='/dashboard/add_employee' element={<AddEmployee/>}></Route>
+        <Route path='/dashboard/edit_employee/:id' element={<EditEmployee/>}></Route>
+      </Route>
+    </Routes>
     </BrowserRouter>
   );
 }

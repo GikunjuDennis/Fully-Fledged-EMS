@@ -43,6 +43,7 @@ app.get('/verify', verifyUser, (req, res) =>{
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 //app.use(express.static('Public'))
+app.use('/Public', express.static(path.join(__dirname, 'Public')));
 
 
 //Assign a port number
